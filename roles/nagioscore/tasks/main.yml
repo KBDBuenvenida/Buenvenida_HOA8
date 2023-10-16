@@ -1,0 +1,23 @@
+---
+- name: Install Nagios Core
+  unarchive:
+    src: https://go.nagios.org/get-core/4-4-13
+    dest: /usr/local/bin
+    remote_src: yes
+    mode: 0755
+    owner: root
+    group: root
+
+- name: Configure Nagios Core to start at boot (CentOS8)
+  service:
+    name: nagios
+    enabled: yes
+    state: started
+  when: ansible_distribution == "CentOS"
+
+- name: Configure Nagios Core to start at Boot (Ubuntu)
+  service:
+    name: nagios4
+    enabled: yes
+    state: started
+  when: ansible_distribution == "Ubuntu"
